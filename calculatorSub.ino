@@ -11,6 +11,7 @@ char keys[rows][cols] = {
   {'7', '8', '9', 'C'},
   {'*', '0', '#', 'D'}
 };
+
 byte rowPins[rows] = {5, 6, 7, 8};
 byte colPins[cols] = {9, 10, 11, 12};
 char lastCorrect = 1;
@@ -34,27 +35,30 @@ void setup() {
   while (key == NO_KEY) {
     char tempkey = bobokey.getKey();
     switch (tempkey) {
-      case NO_KEY:
-        break;
       case 'A':
         lcd.clear();
         lcd.home();
         lcd.print("Hello BoBo!");
+        key='A';
         break;
       case 'B':
         lcd.clear();
         lcd.home();
-        lcd.print("Hello BoBo!");
+        lcd.print("Hello Daddy!");
+        key='B';
         break;
       case 'C':
         lcd.clear();
         lcd.home();
-        lcd.print("Hello BoBo!");
+        lcd.print("Hello Mommy!");
+        key='C';
         break;
     }
-    randomSeed(millis());
+
   }
 
+    delay(1000);
+    randomSeed(millis());
 }
 
 void loop() {
@@ -69,21 +73,21 @@ void loop() {
   }
 
   if (type == 0) {
-    part1 = int(random(2, 100));
+    part1 = int(random(11, 300));
     lcd.print(part1);
     lcd.print(" - ");
     lastSign = '-';
     part2 = int(random(1, part1));
     result = part1 - part2;
   } else if (type == 1) {
-    part1 = int(random(1, 10));
+    part1 = int(random(1, 12));
     lcd.print(part1);
     lcd.print(" x ");
     lastSign = 'x';
-    part2 = int(random(1, 10));
+    part2 = int(random(1, 12));
     result = part1 * part2;
   } else if (type == 2) {
-    result = int(random(2, 100));
+    result = int(random(11, 300));
     part1 = int(random(1, result));
     lcd.print(part1);
     lcd.print(" + ");
@@ -104,7 +108,7 @@ void loop() {
   unsigned long t0 = millis();
   int ans = 0;
 
-  while ((millis() < t0 + 10000) && ((result >= 10 && ans < 10) || (result < 10 && ans == 0))) {
+  while ((millis() < t0 + 20000) && ((result >=100 && ans<100)||((result >= 10 && result<100) && ans < 10) || (result < 10 && ans == 0))) {
     char key = bobokey.getKey();
     switch (key) {
       case NO_KEY:
@@ -131,10 +135,10 @@ void loop() {
       lcd.home();
       for (int i = 0; i < 2; i++) {
         lcd.print("YES!");
-        delay(500);
+        delay(400);
         lcd.clear();
         lcd.home();
-        delay(500);
+        delay(100);
       }
 
       if (strike >= 3) {
